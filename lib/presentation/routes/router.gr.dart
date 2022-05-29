@@ -14,7 +14,7 @@ import 'package:auto_route/auto_route.dart' as _i6;
 import 'package:flutter/material.dart' as _i7;
 
 import '../../domain/tasks/task.dart' as _i8;
-import '../pages/notes/notes_overview_page.dart' as _i5;
+import '../pages/home/home_page.dart' as _i5;
 import '../pages/sign_in/sign_in_page.dart' as _i2;
 import '../pages/splash/splash_page.dart' as _i1;
 import '../pages/tasks/task_form_page.dart' as _i4;
@@ -45,9 +45,9 @@ class Router extends _i6.RootStackRouter {
           routeData: routeData,
           child: _i4.TaskFormPage(key: args.key, task: args.task));
     },
-    NotesOverviewRoute.name: (routeData) {
+    HomeRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i5.NotesOverviewPage());
+          routeData: routeData, child: const _i5.HomePage());
     }
   };
 
@@ -57,7 +57,7 @@ class Router extends _i6.RootStackRouter {
         _i6.RouteConfig(SignInRoute.name, path: '/signIn'),
         _i6.RouteConfig(TasksOverviewRoute.name, path: '/tasks'),
         _i6.RouteConfig(TaskFormRoute.name, path: '/task/:id'),
-        _i6.RouteConfig(NotesOverviewRoute.name, path: '/note')
+        _i6.RouteConfig(HomeRoute.name, path: '/note')
       ];
 }
 
@@ -109,9 +109,9 @@ class TaskFormRouteArgs {
 }
 
 /// generated route for
-/// [_i5.NotesOverviewPage]
-class NotesOverviewRoute extends _i6.PageRouteInfo<void> {
-  const NotesOverviewRoute() : super(NotesOverviewRoute.name, path: '/note');
+/// [_i5.HomePage]
+class HomeRoute extends _i6.PageRouteInfo<void> {
+  const HomeRoute() : super(HomeRoute.name, path: '/note');
 
-  static const String name = 'NotesOverviewRoute';
+  static const String name = 'HomeRoute';
 }

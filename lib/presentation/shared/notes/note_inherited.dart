@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:todo_list/domain/notes/note.dart';
 
 class NoteInherited extends InheritedWidget {
-  final Note note;
+  final Note value;
 
-  const NoteInherited({Key? key, required this.note, required Widget child})
+  const NoteInherited({Key? key, required this.value, required Widget child})
       : super(key: key, child: child);
 
   static NoteInherited of(BuildContext context) {
@@ -18,5 +18,5 @@ class NoteInherited extends InheritedWidget {
 
   @override
   bool updateShouldNotify(covariant NoteInherited oldWidget) =>
-      note != oldWidget.note;
+      value != oldWidget.value;
 }

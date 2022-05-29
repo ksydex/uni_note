@@ -10,8 +10,7 @@ class SplashPage extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) => state.map(
         initial: (_) => null,
-        authenticated: (_) =>
-            AutoRouter.of(context).replace(const NotesOverviewRoute()),
+        authenticated: (_) => AutoRouter.of(context).replace(const HomeRoute()),
         unauthenticated: (_) =>
             AutoRouter.of(context).replace(const SignInRoute()),
       ),

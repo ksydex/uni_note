@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/domain/groups/group.dart';
 import 'package:todo_list/domain/notes/note.dart';
-import 'package:todo_list/presentation/pages/notes/widgets/note_list_view.dart';
-import 'package:todo_list/presentation/pages/tasks/widgets/empty_result.dart';
+import 'package:todo_list/presentation/constants/indents.dart';
+import 'package:todo_list/presentation/shared/groups/group_list_view.dart';
+import 'package:todo_list/presentation/shared/notes/note_list_view.dart';
 
-class NotesOverviewPage extends StatelessWidget {
-  const NotesOverviewPage({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,10 @@ class NotesOverviewPage extends StatelessWidget {
           // SignOutButton(),th
         ],
       ),
-      body: const _NotesOverview(),
+      body: const Padding(
+        padding: EdgeInsets.all(Indents.sm),
+        child: _NotesOverview(),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
           // AutoRouter.of(context).push(TaskFormRoute());
@@ -34,8 +39,12 @@ class _NotesOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notes = <Note>[Note.test(), Note.test(true), Note.test()];
-    return notes.isNotEmpty
-        ? NoteListView(notes: notes)
-        : const EmptyResult(message: "Создайте вашу первую заметку!");
+    final groups = <Group>[Group.test(), Group.test()];
+    return ListView(
+      children: [
+        GroupListView(groups: groups),
+        NoteListView(notes: notes),
+      ],
+    );
   }
 }
