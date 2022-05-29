@@ -1,0 +1,3 @@
+class AuthenticationFailure {
+  AuthenticationFailure.invalidEmailAndPasswordCombination();
+}
