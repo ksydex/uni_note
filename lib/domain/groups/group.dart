@@ -8,5 +8,6 @@ class Group {
 
   Group({required this.id, required this.name, required this.isFavorite});
 
-  factory Group.test() => Group(id: 1, name: 'Папка', isFavorite: false);
+  factory Group.test([bool isFavorite = false]) =>
+      Group(id: 1, name: 'Папка', isFavorite: isFavorite);
 }

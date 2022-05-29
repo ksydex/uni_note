@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:todo_list/presentation/constants/indents.dart';
 import 'package:todo_list/presentation/shared/groups/group_card/pane/group_action_pane.dart';
 import 'package:todo_list/presentation/shared/groups/group_inherited.dart';
 
@@ -27,11 +28,17 @@ class GroupCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Text(group.name, style: theme.textTheme.titleMedium),
+                    Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(right: Indents.md),
+                          child: Icon(Icons.folder),
+                        ),
+                        Text(group.name, style: theme.textTheme.titleMedium),
+                      ],
+                    ),
                     if (group.isFavorite)
-                      Text("В избранном",
-                          style: theme.textTheme.bodySmall!
-                              .copyWith(color: Colors.orange))
+                      Text("В избранном", style: theme.textTheme.bodySmall)
                   ],
                 ),
               ))),

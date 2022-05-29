@@ -29,9 +29,7 @@ class NoteCard extends StatelessWidget {
                   children: [
                     Text(note.name, style: theme.textTheme.titleMedium),
                     if (note.isFavorite)
-                      Text("В избранном",
-                          style: theme.textTheme.bodySmall!
-                              .copyWith(color: Colors.orange))
+                      Text("В избранном", style: theme.textTheme.bodySmall)
                   ],
                 ),
               ))),

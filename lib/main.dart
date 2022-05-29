@@ -4,11 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:todo_list/application/app_bloc_observer.dart';
 import 'package:todo_list/application/auth/auth_bloc.dart';
 import 'package:todo_list/injection.dart';
 import 'package:todo_list/presentation/routes/router.gr.dart' as app_router;
-import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,12 +36,12 @@ class TodoApp extends StatelessWidget {
       create: (context) =>
           getIt<AuthBloc>()..add(const AuthEvent.authCheckRequested()),
       child: MaterialApp.router(
-        title: 'Todo App',
+        title: 'UniNote',
         routerDelegate: _appRouter.delegate(),
         routeInformationParser: _appRouter.defaultRouteParser(),
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+            primarySwatch: Colors.blue,
+            iconTheme: const IconThemeData(color: Colors.grey)),
         debugShowCheckedModeBanner: false,
       ),
     );

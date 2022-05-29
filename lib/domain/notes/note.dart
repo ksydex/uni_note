@@ -19,4 +19,7 @@ class Note {
       name: 'Заметка тест',
       body: 'Заметка тело',
       isFavorite: isFavorite);
+
+  factory Note.empty([bool isFavorite = false]) =>
+      Note(id: 0, name: '', body: '', isFavorite: false);
 }
