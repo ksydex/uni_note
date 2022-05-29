@@ -4,11 +4,8 @@ import 'package:todo_list/domain/tasks/task.dart';
 class InheritedTask extends InheritedWidget {
   final Task task;
 
-  const InheritedTask({
-    Key? key,
-    required this.task,
-    required Widget child
-  }) : super(key: key, child: child);
+  const InheritedTask({Key? key, required this.task, required Widget child})
+      : super(key: key, child: child);
 
   static InheritedTask of(BuildContext context) {
     final result = context.dependOnInheritedWidgetOfExactType<InheritedTask>();
@@ -21,5 +18,5 @@ class InheritedTask extends InheritedWidget {
 
   @override
   bool updateShouldNotify(covariant InheritedTask oldWidget) =>
-    task != oldWidget.task;
+      task != oldWidget.task;
 }

@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_list/application/auth/auth_bloc.dart';
 import 'package:todo_list/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:todo_list/injection.dart';
-import 'package:todo_list/presentation/custom_widgets/error_snack_bar.dart';
 import 'package:todo_list/presentation/routes/router.gr.dart';
+import 'package:todo_list/presentation/shared/error_snack_bar.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({Key? key}) : super(key: key);
