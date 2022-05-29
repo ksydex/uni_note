@@ -5,6 +5,7 @@ import 'package:todo_list/application/notes/task_form/note_form_cubit.dart';
 import 'package:todo_list/domain/notes/note.dart';
 import 'package:todo_list/injection.dart';
 import 'package:todo_list/presentation/constants/indents.dart';
+import 'package:todo_list/presentation/pages/notes/rich_text_editor.dart';
 
 class NoteFormPage extends StatelessWidget {
   final Note? model;
@@ -87,6 +88,7 @@ class _NoteFormBody extends HookWidget {
                           borderRadius: BorderRadius.circular(3),
                         )),
                   ),
+                  // const RichTextEditor(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [

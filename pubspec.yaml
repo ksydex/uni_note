@@ -27,6 +27,7 @@ dependencies:
   rx_shared_preferences: ^2.3.0
   rxdart: ^0.27.3
   flutter_speed_dial: ^6.0.0
+  flutter_quill: ^4.2.3
 
 dev_dependencies:
   auto_route_generator: ^3.2.3
