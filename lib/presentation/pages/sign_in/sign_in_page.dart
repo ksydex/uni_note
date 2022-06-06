@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_list/application/auth/auth_bloc.dart';
 import 'package:todo_list/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:todo_list/injection.dart';
+import 'package:todo_list/presentation/constants/indents.dart';
 import 'package:todo_list/presentation/routes/router.gr.dart';
 import 'package:todo_list/presentation/shared/error_snack_bar.dart';
 
@@ -14,7 +15,7 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Вход'),
+        title: const Text('Авторизация'),
       ),
       body: BlocProvider(
         create: (context) => getIt<SignInFormBloc>(),
@@ -30,12 +31,14 @@ class _SignInForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocConsumer<SignInFormBloc, SignInFormState>(
       listenWhen: (previous, current) => previous.success != current.success,
       listener: (context, state) {
         if (state.success == true) {
           context.read<AuthBloc>().add(const AuthEvent.authCheckRequested());
-          AutoRouter.of(context).replace(const TasksOverviewRoute());
+          AutoRouter.of(context).replace(const HomeRoute());
         } else if (state.success == false) {
           ScaffoldMessenger.of(context)
               .showSnackBar(ErrorSnackBar(message: state.errorMessage!));
@@ -47,49 +50,65 @@ class _SignInForm extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                const SizedBox(
+                  height: 250,
+                  child: Center(
+                    child: Text(
+                      "UniNote",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 32,
+                          color: Colors.blue),
+                    ),
+                  ),
+                ),
                 TextFormField(
                   decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.email), hintText: 'email'),
+                      prefixIcon: Icon(Icons.email), hintText: 'Email'),
                   autofocus: true,
                   validator: (value) => (value == null || value.isEmpty)
-                      ? 'Enter the email, please'
+                      ? 'Пожалуйста, введите Email'
                       : null,
                   onChanged: (value) => context.read<SignInFormBloc>().add(
                       SignInFormEvent.emailChanged(
                           value)), // валидация на null прошла выше,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
                 TextFormField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.lock),
-                    labelText: 'Password',
+                    labelText: 'Пароль',
                   ),
                   autocorrect: false,
                   obscureText: true,
                   validator: (value) => (value == null || value.isEmpty)
-                      ? 'Enter the password, please'
+                      ? 'Пожалуйста, введите пароль'
                       : null,
                   onChanged: (value) => context.read<SignInFormBloc>().add(
                       SignInFormEvent.passwordChanged(
                           value)), // валидация на null прошла выше
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: Indents.lg,
                 ),
-                TextButton(
-                  onPressed: () {
-                    if (_signInFormKey.currentState!.validate()) {
-                      _signInFormKey.currentState?.save();
-                      context
-                          .read<SignInFormBloc>()
-                          .add(const SignInFormEvent.signInBtnPressed());
-                    }
-                  },
-                  child: const Text('SIGN IN'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {}, child: const Text('Сбросить пароль')),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_signInFormKey.currentState!.validate()) {
+                          _signInFormKey.currentState?.save();
+                          context
+                              .read<SignInFormBloc>()
+                              .add(const SignInFormEvent.signInBtnPressed());
+                        }
+                      },
+                      child: const Text('Войти'),
+                    ),
+                  ],
                 ),
                 if (state.isSubmitting) ...[
                   const SizedBox(

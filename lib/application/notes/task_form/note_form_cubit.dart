@@ -14,8 +14,6 @@ class NoteFormCubit extends Cubit<NoteFormState> {
       emit(state.copyWith(model: note, isEditing: true));
 
   Future<void> save(Note note) async {
-    print('save worked');
-
     emit(state.copyWith(isSaving: true));
     try {
       if (state.isEditing) {

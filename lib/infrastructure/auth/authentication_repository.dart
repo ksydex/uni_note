@@ -14,13 +14,11 @@ class AuthenticationRepository {
 
   Future<User?> getCurrentUser() async {
     String? userData = await _prefs.getString(userKey);
-    return (userData != null)
-      ? User.fromJson(jsonDecode(userData))
-      : null;
+    return (userData != null) ? User.fromJson(jsonDecode(userData)) : null;
   }
 
   Future<User> signInWithEmailAndPassword(String email, String password) async {
-    if (email == 'yo@mail.ru' && password == "odsp") {
+    if (email == 'artyom@gmail.com' && password == "123456") {
       final user = User(id: 1, name: 'Ivan', email: email);
       await _prefs.setString(userKey, jsonEncode(user.toJson()));
       return user;

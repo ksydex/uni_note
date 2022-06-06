@@ -4,6 +4,7 @@ import 'package:todo_list/domain/groups/group.dart';
 import 'package:todo_list/domain/notes/note.dart';
 import 'package:todo_list/presentation/constants/indents.dart';
 import 'package:todo_list/presentation/pages/tasks/widgets/search_button.dart';
+import 'package:todo_list/presentation/pages/tasks/widgets/sign_out_button.dart';
 import 'package:todo_list/presentation/routes/router.gr.dart';
 import 'package:todo_list/presentation/shared/groups/group_list_view.dart';
 import 'package:todo_list/presentation/shared/notes/note_list_view.dart';
@@ -15,13 +16,13 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Заметки'),
+        title: const Text('Документы'),
         leading: IconButton(
             icon: const Icon(Icons.account_circle_outlined), onPressed: () {}),
         actions: const [
           SearchButton(),
           // FilterButton(),
-          // SignOutButton(),
+          SignOutButton(),
         ],
       ),
       body: const Padding(
@@ -41,8 +42,17 @@ class _NotesOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final notes = <Note>[Note.test(), Note.test(true), Note.test()];
-    final groups = <Group>[Group.test(), Group.test(true)];
+    final notes = <Note>[
+      Note(id: 1, name: "Расписание пар", body: "", isFavorite: true),
+      Note(id: 3, name: "Курсовые проекты", body: "", isFavorite: true),
+      Note(id: 2, name: "Тестирование диплома", body: "", isFavorite: false),
+    ];
+    final groups = <Group>[
+      Group(id: 1, name: "Функциональное программирование", isFavorite: false),
+      Group(id: 2, name: "Компьютерная графика", isFavorite: false),
+      Group(id: 3, name: "Информатика", isFavorite: false),
+      Group(id: 4, name: "Мультимедийные технологии", isFavorite: false),
+    ];
     return ListView(
       children: [
         GroupListView(groups: groups),
