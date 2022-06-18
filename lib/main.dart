@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:todo_list/application/app_bloc_observer.dart';
-import 'package:todo_list/application/auth/auth_bloc.dart';
+import 'package:todo_list/core/application/app_bloc_observer.dart';
+import 'package:todo_list/core/application/auth/auth_bloc.dart';
+import 'package:todo_list/core/presentation/routes/app_router.dart';
 import 'package:todo_list/injection.dart';
-import 'package:todo_list/presentation/routes/router.gr.dart' as app_router;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +27,7 @@ void main() async {
 class TodoApp extends StatelessWidget {
   TodoApp({Key? key}) : super(key: key);
 
-  final _appRouter = app_router.Router();
+  final _appRouter = AppRouter();
 
   // This widget is the root of the application.
   @override
