@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/core/domain/groups/group.dart';
+import 'package:todo_list/core/domain/entities/groups/group.dart';
 import 'package:todo_list/core/presentation/shared/groups/group_card/group_card.dart';
 import 'package:todo_list/core/presentation/shared/groups/group_inherited.dart';
 

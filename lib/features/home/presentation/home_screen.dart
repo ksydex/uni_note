@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_list/core/domain/groups/group.dart';
-import 'package:todo_list/core/domain/notes/note.dart';
+import 'package:todo_list/core/domain/entities/groups/group.dart';
+import 'package:todo_list/core/domain/entities/notes/note.dart';
 import 'package:todo_list/core/presentation/constants/indents.dart';
 import 'package:todo_list/core/presentation/routes/app_router.dart';
 import 'package:todo_list/core/presentation/shared/groups/group_list_view.dart';

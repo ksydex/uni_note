@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:todo_list/core/domain/notes/note.dart';
+import 'package:todo_list/core/domain/entities/notes/note.dart';
 
 part 'note_form_cubit.freezed.dart';
 part 'note_form_state.dart';

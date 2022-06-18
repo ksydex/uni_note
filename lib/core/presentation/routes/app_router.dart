@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_list/core/domain/notes/note.dart';
+import 'package:todo_list/core/domain/entities/notes/note.dart';
 import 'package:todo_list/features/auth/sign_in/presentation/sign_in_screen.dart';
 import 'package:todo_list/features/home/presentation/home_screen.dart';
 import 'package:todo_list/features/note_form/presentation/note_form_screen.dart';

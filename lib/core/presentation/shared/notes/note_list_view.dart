@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/core/domain/notes/note.dart';
+import 'package:todo_list/core/domain/entities/notes/note.dart';
 import 'package:todo_list/core/presentation/shared/notes/note_card/note_card.dart';
 import 'package:todo_list/core/presentation/shared/notes/note_inherited.dart';
 

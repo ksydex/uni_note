@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:todo_list/core/domain/notes/note.dart';
+import 'package:todo_list/core/domain/entities/notes/note.dart';
 import 'package:todo_list/features/note_form/presentation/rich_text_editor.dart';
 
 class NoteFormScreen extends StatelessWidget {

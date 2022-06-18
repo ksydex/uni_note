@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:injectable/injectable.dart';
 import 'package:rx_shared_preferences/rx_shared_preferences.dart';
-import 'package:todo_list/core/domain/users/authentication_exception.dart';
-import 'package:todo_list/core/domain/users/user.dart';
+import 'package:todo_list/core/domain/entities/users/user.dart';
+import 'package:todo_list/core/infrastructure/auth/authentication_exception.dart';
 
 @LazySingleton()
 class AuthenticationRepository {

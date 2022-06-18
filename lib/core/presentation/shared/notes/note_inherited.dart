@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/core/domain/notes/note.dart';
+import 'package:todo_list/core/domain/entities/notes/note.dart';
 
 class NoteInherited extends InheritedWidget {
   final Note value;

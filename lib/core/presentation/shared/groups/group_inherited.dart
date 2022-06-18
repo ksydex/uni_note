@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/core/domain/groups/group.dart';
+import 'package:todo_list/core/domain/entities/groups/group.dart';
 
 class GroupInherited extends InheritedWidget {
   final Group value;

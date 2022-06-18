@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:todo_list/core/domain/users/user.dart';
+import 'package:todo_list/core/domain/entities/users/user.dart';
 
 class UserService {
   // singleton

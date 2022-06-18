@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:todo_list/core/application/utils.dart';
-import 'package:todo_list/core/domain/users/authentication_exception.dart';
-import 'package:todo_list/core/domain/users/user.dart';
+import 'package:todo_list/core/domain/entities/users/user.dart';
+import 'package:todo_list/core/infrastructure/auth/authentication_exception.dart';
 import 'package:todo_list/core/infrastructure/auth/authentication_repository.dart';
 
 part 'sign_in_bloc.freezed.dart';
