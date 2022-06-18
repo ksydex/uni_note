@@ -23,6 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }, signedOut: (event) async {
         await _auth.signOut();
         emit(const AuthState.unauthenticated());
+        print('tes 1');
       }),
       transformer: sequential(),
     );

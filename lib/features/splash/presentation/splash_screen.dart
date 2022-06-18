@@ -5,6 +5,8 @@ import 'package:todo_list/core/application/auth/auth_bloc.dart';
 import 'package:todo_list/core/presentation/routes/app_router.dart';
 
 class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
