@@ -1,42 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:todo_list/core/application/auth/auth_bloc.dart';
 import 'package:todo_list/core/domain/entities/groups/group.dart';
 import 'package:todo_list/core/domain/entities/notes/note.dart';
 import 'package:todo_list/core/presentation/constants/indents.dart';
 import 'package:todo_list/core/presentation/routes/app_router.dart';
 import 'package:todo_list/core/presentation/shared/groups/group_list_view.dart';
-import 'package:todo_list/core/presentation/shared/indent.dart';
 import 'package:todo_list/core/presentation/shared/notes/note_list_view.dart';
-import 'package:todo_list/injection.dart';
-
-class SignOutButton extends StatelessWidget {
-  const SignOutButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<AuthBloc>(),
-      child: BlocConsumer<AuthBloc, AuthState>(
-          listener: (ctx, state) => state.maybeMap(
-              unauthenticated: (_) =>
-                  AutoRouter.of(context).replace(const SignInRoute()),
-              orElse: () => null),
-          builder: (context, __) => TextButton(
-              onPressed: () =>
-                  context.read<AuthBloc>().add(const AuthEvent.signedOut()),
-              child: Row(
-                children: const [
-                  Icon(Icons.exit_to_app),
-                  Indent.md(),
-                  Text("Выйти из приложения")
-                ],
-              ))),
-    );
-  }
-}
+import 'package:todo_list/features/home/presentation/widgets/SignOutButton.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
