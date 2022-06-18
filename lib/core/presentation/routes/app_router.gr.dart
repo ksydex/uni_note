@@ -18,11 +18,12 @@ class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(routeData: routeData, child: SplashPage());
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: SplashScreen());
     },
     SignInRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const SignInPage());
+          routeData: routeData, child: const SignInScreen());
     },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -33,7 +34,7 @@ class _$AppRouter extends RootStackRouter {
           orElse: () => const NoteFormRouteArgs());
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: NoteFormPage(key: args.key, model: args.model));
+          child: NoteFormScreen(key: args.key, model: args.model));
     }
   };
 
@@ -47,7 +48,7 @@ class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
-/// [SplashPage]
+/// [SplashScreen]
 class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute() : super(SplashRoute.name, path: '/');
 
@@ -55,7 +56,7 @@ class SplashRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [SignInPage]
+/// [SignInScreen]
 class SignInRoute extends PageRouteInfo<void> {
   const SignInRoute() : super(SignInRoute.name, path: '/signIn');
 
@@ -71,7 +72,7 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [NoteFormPage]
+/// [NoteFormScreen]
 class NoteFormRoute extends PageRouteInfo<NoteFormRouteArgs> {
   NoteFormRoute({Key? key, Note? model})
       : super(NoteFormRoute.name,

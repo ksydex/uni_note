@@ -1,18 +1,17 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_list/core/domain/notes/note.dart';
-import 'package:todo_list/core/presentation/pages/notes/note_form_page.dart';
-import 'package:todo_list/core/presentation/pages/sign_in/sign_in_page.dart';
-import 'package:todo_list/core/presentation/pages/splash/splash_page.dart';
-import 'package:todo_list/features/home/presentation/screens/home_screen.dart';
+import 'package:todo_list/features/auth/sign_in/presentation/sign_in_screen.dart';
+import 'package:todo_list/features/home/presentation/home_screen.dart';
+import 'package:todo_list/features/note_form/presentation/note_form_screen.dart';
+import 'package:todo_list/features/splash/presentation/splash_screen.dart';
 
 part 'app_router.gr.dart';
 
-@MaterialAutoRouter(replaceInRouteName: 'Page,Route', routes: <AutoRoute>[
-  MaterialRoute(path: '/', page: SplashPage, initial: true),
-  MaterialRoute(path: '/signIn', page: SignInPage),
+@MaterialAutoRouter(replaceInRouteName: 'Screen,Route', routes: <AutoRoute>[
+  MaterialRoute(path: '/', page: SplashScreen, initial: true),
+  MaterialRoute(path: '/signIn', page: SignInScreen),
   MaterialRoute(path: '/', page: HomeScreen),
-  MaterialRoute(path: '/note/:id', page: NoteFormPage)
+  MaterialRoute(path: '/note/:id', page: NoteFormScreen)
 ])
 class AppRouter extends _$AppRouter {}

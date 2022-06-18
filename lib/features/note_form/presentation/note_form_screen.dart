@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:todo_list/core/domain/notes/note.dart';
-import 'package:todo_list/core/presentation/pages/notes/rich_text_editor.dart';
+import 'package:todo_list/features/note_form/presentation/rich_text_editor.dart';
 
-class NoteFormPage extends StatelessWidget {
+class NoteFormScreen extends StatelessWidget {
   final Note? model;
 
-  const NoteFormPage({Key? key, this.model}) : super(key: key);
+  const NoteFormScreen({Key? key, this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

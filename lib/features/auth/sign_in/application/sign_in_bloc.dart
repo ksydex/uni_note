@@ -6,18 +6,18 @@ import 'package:todo_list/core/domain/users/authentication_exception.dart';
 import 'package:todo_list/core/domain/users/user.dart';
 import 'package:todo_list/core/infrastructure/auth/authentication_repository.dart';
 
-part 'sign_in_form_bloc.freezed.dart';
-part 'sign_in_form_event.dart';
-part 'sign_in_form_state.dart';
+part 'sign_in_bloc.freezed.dart';
+part 'sign_in_event.dart';
+part 'sign_in_state.dart';
 
 @injectable
-class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
+class SignInBloc extends Bloc<SignInEvent, SignInState> {
   final AuthenticationRepository _auth;
   // задержка проверки появления нового значения,
   // чтобы не проверять после каждой введёной буквы
   static const debounceDuration = Duration(milliseconds: 100);
 
-  SignInFormBloc(this._auth) : super(SignInFormState.initial()) {
+  SignInBloc(this._auth) : super(SignInState.initial()) {
     on<EmailChanged>(
       (event, emit) => emit(state.copyWith(email: event.email, success: null)),
       transformer: debounceRestartable(debounceDuration),
