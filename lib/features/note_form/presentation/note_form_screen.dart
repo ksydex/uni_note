@@ -1,20 +1,44 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:todo_list/core/domain/entities/notes/note.dart';
+import 'package:todo_list/core/presentation/routes/app_router.dart';
 import 'package:todo_list/features/note_form/presentation/rich_text_editor.dart';
 
-class NoteFormScreen extends StatelessWidget {
+class NoteFormScreen extends StatefulWidget {
   final Note? model;
 
-  const NoteFormScreen({Key? key, this.model}) : super(key: key);
+  NoteFormScreen({Key? key, this.model}) : super(key: key);
+
+  @override
+  State<NoteFormScreen> createState() => _NoteFormScreenState();
+}
+
+class _NoteFormScreenState extends State<NoteFormScreen> {
+  late final QuillController controller;
+
+  _NoteFormScreenState() {
+    final v = Document.fromDelta(Delta()
+      ..insert("")
+      ..insert("\n", <String, dynamic>{"header": 2}));
+
+    controller = QuillController(
+      document: v,
+      selection: const TextSelection.collapsed(offset: 0),
+    )..changes.listen((event) {
+        final r = event.item2.first.value == 1;
+        if (r != _isSaveDisabled) setState(() => _isSaveDisabled = r);
+      });
+  }
+
+  bool _isSaveDisabled = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text((model == null) ? 'Новый документ' : model!.name),
           actions: [
-            if (model != null)
+            if (widget.model != null)
               IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () async {
@@ -29,29 +53,22 @@ class NoteFormScreen extends StatelessWidget {
                   // if (v == null) AutoRouter.of(context).pop();
                 },
               ),
-            IconButton(icon: const Icon(Icons.done), onPressed: () {})
+            IconButton(
+                icon: const Icon(Icons.done),
+                onPressed: _isSaveDisabled
+                    ? null
+                    : () {
+                        print(controller.document.toDelta().toList());
+                        AutoRouter.of(context).replace(const HomeRoute());
+                      })
           ],
         ),
-        body: _NoteFormBody(
-          model: model,
+        body: SingleChildScrollView(
+          child: Column(children: <Widget>[
+            RichTextEditor(
+              controller: controller,
+            ),
+          ]),
         ));
-  }
-}
-
-class _NoteFormBody extends HookWidget {
-  final Note? model;
-
-  const _NoteFormBody({Key? key, this.model}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(children: const <Widget>[
-        RichTextEditor(),
-        // SizedBox(
-        //   height: 400,
-        // )
-      ]),
-    ); // Single child scroll view
   }
 }
