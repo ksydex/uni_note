@@ -38,6 +38,10 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: NoteFormScreen(key: args.key, model: args.model));
+    },
+    TagsOverviewRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const TagsOverviewScreen());
     }
   };
 
@@ -46,7 +50,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(SplashRoute.name, path: '/'),
         RouteConfig(SignInRoute.name, path: '/signIn'),
         RouteConfig(HomeRoute.name, path: '/'),
-        RouteConfig(NoteFormRoute.name, path: '/note/:id')
+        RouteConfig(NoteFormRoute.name, path: '/note/:id'),
+        RouteConfig(TagsOverviewRoute.name, path: '/tag')
       ];
 }
 
@@ -110,4 +115,12 @@ class NoteFormRouteArgs {
   String toString() {
     return 'NoteFormRouteArgs{key: $key, model: $model}';
   }
+}
+
+/// generated route for
+/// [TagsOverviewScreen]
+class TagsOverviewRoute extends PageRouteInfo<void> {
+  const TagsOverviewRoute() : super(TagsOverviewRoute.name, path: '/tag');
+
+  static const String name = 'TagsOverviewRoute';
 }

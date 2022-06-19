@@ -8,10 +8,12 @@ class CardBase extends StatelessWidget {
   final Icon? leadingIcon;
   final Text text;
   final Widget? append;
+  final Widget? appendBottom;
 
   const CardBase(
       {Key? key,
       this.onTap,
+      this.appendBottom,
       this.leadingIcon,
       required this.text,
       this.actionPane,
@@ -27,19 +29,23 @@ class CardBase extends StatelessWidget {
           child: InkWell(
               onTap: () => onTap?.call(),
               child: Container(
-                alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.all(12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
+                child: Column(
                   children: [
-                    Row(children: [
-                      if (leadingIcon != null) const Icon(Icons.folder),
-                      if (leadingIcon != null) const Indent.md(),
-                      text,
-                    ]),
-                    if (append != null) append!
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Row(children: [
+                          if (leadingIcon != null) leadingIcon!,
+                          if (leadingIcon != null) const Indent.md(),
+                          text,
+                        ]),
+                        if (append != null) append!
+                      ],
+                    ),
+                    if (appendBottom != null) appendBottom!
                   ],
                 ),
               ))),

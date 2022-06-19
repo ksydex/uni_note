@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/core/presentation/constants/indents.dart';
 import 'package:todo_list/core/presentation/shared/card_base.dart';
 import 'package:todo_list/core/presentation/shared/notes/note_card/pane/note_action_pane.dart';
 import 'package:todo_list/core/presentation/shared/notes/note_inherited.dart';
+import 'package:todo_list/core/presentation/shared/tags/note_card/tag_card.dart';
 
 class NoteCard extends StatelessWidget {
   const NoteCard({Key? key}) : super(key: key);
@@ -22,6 +24,21 @@ class NoteCard extends StatelessWidget {
           if (note.isFavorite)
             Text("В избранном", style: theme.textTheme.bodySmall)
         ],
+      ),
+      appendBottom: Padding(
+        padding: const EdgeInsets.only(top: Indents.sm),
+        child: Row(
+          children: note.tags
+              .map((e) => Padding(
+                    padding: const EdgeInsets.only(right: Indents.md),
+                    child: TagIndicator(
+                      tag: e,
+                      height: 10,
+                      showText: true,
+                    ),
+                  ))
+              .toList(),
+        ),
       ),
     );
   }
