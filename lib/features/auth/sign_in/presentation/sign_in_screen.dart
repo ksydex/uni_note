@@ -38,7 +38,7 @@ class _SignInForm extends StatelessWidget {
       listener: (context, state) {
         if (state.success == true) {
           context.read<AuthBloc>().add(const AuthEvent.authCheckRequested());
-          AutoRouter.of(context).replace(const HomeRoute());
+          AutoRouter.of(context).replace(HomeRoute());
         } else if (state.success == false) {
           ScaffoldMessenger.of(context)
               .showSnackBar(ErrorSnackBar(message: state.errorMessage!));

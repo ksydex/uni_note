@@ -19,15 +19,18 @@ class _$AppRouter extends RootStackRouter {
   final Map<String, PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: SplashScreen());
+          routeData: routeData, child: const SplashScreen());
     },
     SignInRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const SignInScreen());
     },
     HomeRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const HomeScreen());
+          routeData: routeData,
+          child: HomeScreen(key: args.key, group: args.group));
     },
     NoteFormRoute.name: (routeData) {
       final args = routeData.argsAs<NoteFormRouteArgs>(
@@ -65,10 +68,25 @@ class SignInRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [HomeScreen]
-class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute() : super(HomeRoute.name, path: '/');
+class HomeRoute extends PageRouteInfo<HomeRouteArgs> {
+  HomeRoute({Key? key, Group? group})
+      : super(HomeRoute.name,
+            path: '/', args: HomeRouteArgs(key: key, group: group));
 
   static const String name = 'HomeRoute';
+}
+
+class HomeRouteArgs {
+  const HomeRouteArgs({this.key, this.group});
+
+  final Key? key;
+
+  final Group? group;
+
+  @override
+  String toString() {
+    return 'HomeRouteArgs{key: $key, group: $group}';
+  }
 }
 
 /// generated route for

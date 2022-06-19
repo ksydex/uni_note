@@ -8,7 +8,7 @@ import 'package:todo_list/features/note_form/presentation/rich_text_editor.dart'
 class NoteFormScreen extends StatefulWidget {
   final Note? model;
 
-  NoteFormScreen({Key? key, this.model}) : super(key: key);
+  const NoteFormScreen({Key? key, this.model}) : super(key: key);
 
   @override
   State<NoteFormScreen> createState() => _NoteFormScreenState();
@@ -59,7 +59,7 @@ class _NoteFormScreenState extends State<NoteFormScreen> {
                     ? null
                     : () {
                         print(controller.document.toDelta().toList());
-                        AutoRouter.of(context).replace(const HomeRoute());
+                        AutoRouter.of(context).replace(HomeRoute());
                       })
           ],
         ),
