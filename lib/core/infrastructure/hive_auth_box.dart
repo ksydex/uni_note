@@ -10,6 +10,8 @@ class HiveAuthBox {
 
   static Box get box => Hive.box('auth');
 
+  static bool get isAuthorized => accessToken != null;
+
   static Future open() async => await Hive.openBox('auth');
 
   static String? get refreshToken => box.get(_refreshTokenKey);

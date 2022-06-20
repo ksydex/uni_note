@@ -1,15 +1,18 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:todo_list/core/domain/entities/groups/group.dart';
 import 'package:todo_list/core/domain/entities/notes/note.dart';
-import 'package:todo_list/core/domain/entities/tags/tag/tag.dart';
 import 'package:todo_list/core/presentation/constants/indents.dart';
 import 'package:todo_list/core/presentation/shared/card_base.dart';
 import 'package:todo_list/core/presentation/shared/groups/group_list_view.dart';
 import 'package:todo_list/core/presentation/shared/notes/note_list_view.dart';
+import 'package:todo_list/features/home/application/home_bloc.dart';
+import 'package:todo_list/features/home/application/home_event.dart';
 import 'package:todo_list/features/home/presentation/widgets/home_screen_navbar.dart';
 import 'package:todo_list/features/home/presentation/widgets/profile_container.dart';
+import 'package:todo_list/injection.dart';
 
 class HomeScreen extends StatelessWidget {
   final Group? group;
@@ -45,7 +48,10 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(Indents.sm),
-        child: _NotesOverview(canBePopped: group != null),
+        child: BlocProvider(
+            create: (context) => getIt<HomeBloc>()
+              ..add(HomeEventInitialLoad(groupId: group?.id)),
+            child: _NotesOverview(canBePopped: group != null)),
       ),
       bottomNavigationBar: const HomeScreenNavbar(),
     );
@@ -54,8 +60,10 @@ class HomeScreen extends StatelessWidget {
 
 class _NotesOverview extends StatelessWidget {
   final bool canBePopped;
+  final Group? group;
 
-  const _NotesOverview({Key? key, this.canBePopped = false}) : super(key: key);
+  const _NotesOverview({Key? key, this.canBePopped = false, this.group})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,28 +75,21 @@ class _NotesOverview extends StatelessWidget {
           body: "",
           isFavorite: true,
           groupId: 1,
-          tags: [
-            Tag(id: 2, name: "Срочно", colorHex: "#fa5e1f"),
-            Tag(id: 2, name: "Важно", colorHex: "#ffccaa"),
-            Tag(id: 2, name: "Неприоритетно", colorHex: "#cce6f4")
-          ]),
+          tags: []),
       Note(
           id: 3,
           name: "Курсовые проекты",
           body: "",
           groupId: 1,
           isFavorite: true,
-          tags: [Tag(id: 2, name: "Первый семестр", colorHex: "#59cd90")]),
+          tags: []),
       Note(
           id: 2,
           name: "Тестирование диплома",
           body: "",
           groupId: 1,
           isFavorite: false,
-          tags: [
-            Tag(id: 2, name: "Второй семестр", colorHex: "#d9b5e8"),
-            Tag(id: 2, name: "Неотложно", colorHex: "#f9626c")
-          ]),
+          tags: []),
     ];
 
     final groups = <Group>[
@@ -98,31 +99,37 @@ class _NotesOverview extends StatelessWidget {
       Group(id: 4, name: "Мультимедийные технологии", isFavorite: false),
     ];
 
-    return ListView(
-      children: [
-        if (canBePopped)
-          Row(
-            children: [
-              Expanded(
-                child: CardBase(
-                  onTap: () => AutoRouter.of(context).pop(),
-                  leadingIcon: const Icon(Icons.folder_outlined),
-                  text: Text("Назад", style: theme.textTheme.titleMedium),
-                ),
-              ),
-              if (AutoRouter.of(context).stack.length > 2)
-                Expanded(
-                  child: CardBase(
-                    onTap: () => AutoRouter.of(context).popUntilRoot(),
-                    leadingIcon: const Icon(Icons.folder_copy_outlined),
-                    text: Text("В начало", style: theme.textTheme.titleMedium),
+    return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+      return state.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView(
+              children: [
+                if (canBePopped)
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CardBase(
+                          onTap: () => AutoRouter.of(context).pop(),
+                          leadingIcon: const Icon(Icons.folder_outlined),
+                          text:
+                              Text("Назад", style: theme.textTheme.titleMedium),
+                        ),
+                      ),
+                      if (AutoRouter.of(context).stack.length > 2)
+                        Expanded(
+                          child: CardBase(
+                            onTap: () => AutoRouter.of(context).popUntilRoot(),
+                            leadingIcon: const Icon(Icons.folder_copy_outlined),
+                            text: Text("В начало",
+                                style: theme.textTheme.titleMedium),
+                          ),
+                        ),
+                    ],
                   ),
-                ),
-            ],
-          ),
-        GroupListView(groups: groups),
-        NoteListView(notes: notes),
-      ],
-    );
+                GroupListView(groups: groups),
+                NoteListView(notes: state.notes),
+              ],
+            );
+    });
   }
 }

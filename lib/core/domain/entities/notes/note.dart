@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:todo_list/core/domain/entities/tags/tag/tag.dart';
+import 'package:todo_list/core/domain/entities/tags/note2tag/note2tag.dart';
 
 part 'note.freezed.dart';
 part 'note.g.dart';
@@ -10,9 +10,9 @@ class Note with _$Note {
       {required int id,
       required String name,
       required String body,
-      required int groupId,
+      required int? groupId,
       required bool isFavorite,
-      List<Tag>? tags}) = _Note;
+      required List<Note2Tag> tags}) = _Note;
 
   factory Note.fromJson(Map<String, Object?> json) => _$NoteFromJson(json);
 
@@ -21,12 +21,9 @@ class Note with _$Note {
       name: 'Заметка тест',
       body: 'Заметка тело',
       isFavorite: isFavorite,
-      groupId: 1
-      // tags: [Tag.test(), Tag.test()]
-      );
+      groupId: 1,
+      tags: []);
 
   factory Note.empty([bool isFavorite = false]) =>
-      Note(id: 0, name: '', body: '', isFavorite: false, groupId: 2
-          // tags: []
-          );
+      Note(id: 0, name: '', body: '', isFavorite: false, groupId: 2, tags: []);
 }

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
+import 'package:todo_list/core/infrastructure/hive_auth_box.dart';
 
 abstract class IHttpService {
   Dio get client;
@@ -52,13 +53,18 @@ abstract class HttpService {
   // }
 
   void _onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final String accessToken = '';
+    final String? accessToken =
+        HiveAuthBox.isAuthorized ? 'Bearer ' + HiveAuthBox.accessToken! : null;
+
+    print('token## ' + accessToken.toString());
 
     print('REQUEST: ' +
         options.baseUrl +
         options.path +
-        'data: ' +
-        options.data.toString());
+        ' data: ' +
+        options.data.toString() +
+        ', query' +
+        options.queryParameters.toString());
 
     options.headers.addAll(_getHeaders(accessToken: accessToken));
     handler.next(options);
@@ -75,8 +81,6 @@ abstract class HttpService {
   }
 
   Map<String, String> _getHeaders({String? accessToken}) {
-    String? authorization;
-    authorization = accessToken != null ? 'Bearer $accessToken' : null;
     Map<String, String> headers = {
       'content-type': 'application/json',
       'accept': 'application/json',
@@ -84,8 +88,8 @@ abstract class HttpService {
       // 'CurrentCompanyId': '',
     };
 
-    if (authorization != null) {
-      headers['authorization'] = authorization;
+    if (accessToken != null) {
+      headers['Authorization'] = accessToken;
     }
 
     return headers;

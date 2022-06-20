@@ -28,11 +28,11 @@ class NoteCard extends StatelessWidget {
       appendBottom: Padding(
         padding: const EdgeInsets.only(top: Indents.sm),
         child: Row(
-          children: (note.tags ?? [])
+          children: (note.tags)
               .map((e) => Padding(
                     padding: const EdgeInsets.only(right: Indents.md),
                     child: TagIndicator(
-                      tag: e,
+                      tag: e.tag,
                       height: 10,
                       showText: true,
                     ),

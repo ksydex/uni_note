@@ -23,9 +23,9 @@ mixin _$Note {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get body => throw _privateConstructorUsedError;
-  int get groupId => throw _privateConstructorUsedError;
+  int? get groupId => throw _privateConstructorUsedError;
   bool get isFavorite => throw _privateConstructorUsedError;
-  List<Tag>? get tags => throw _privateConstructorUsedError;
+  List<Note2Tag> get tags => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,9 +40,9 @@ abstract class $NoteCopyWith<$Res> {
       {int id,
       String name,
       String body,
-      int groupId,
+      int? groupId,
       bool isFavorite,
-      List<Tag>? tags});
+      List<Note2Tag> tags});
 }
 
 /// @nodoc
@@ -78,7 +78,7 @@ class _$NoteCopyWithImpl<$Res> implements $NoteCopyWith<$Res> {
       groupId: groupId == freezed
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       isFavorite: isFavorite == freezed
           ? _value.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
@@ -86,7 +86,7 @@ class _$NoteCopyWithImpl<$Res> implements $NoteCopyWith<$Res> {
       tags: tags == freezed
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<Tag>?,
+              as List<Note2Tag>,
     ));
   }
 }
@@ -100,9 +100,9 @@ abstract class _$$_NoteCopyWith<$Res> implements $NoteCopyWith<$Res> {
       {int id,
       String name,
       String body,
-      int groupId,
+      int? groupId,
       bool isFavorite,
-      List<Tag>? tags});
+      List<Note2Tag> tags});
 }
 
 /// @nodoc
@@ -139,7 +139,7 @@ class __$$_NoteCopyWithImpl<$Res> extends _$NoteCopyWithImpl<$Res>
       groupId: groupId == freezed
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       isFavorite: isFavorite == freezed
           ? _value.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
@@ -147,7 +147,7 @@ class __$$_NoteCopyWithImpl<$Res> extends _$NoteCopyWithImpl<$Res>
       tags: tags == freezed
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<Tag>?,
+              as List<Note2Tag>,
     ));
   }
 }
@@ -161,7 +161,7 @@ class _$_Note implements _Note {
       required this.body,
       required this.groupId,
       required this.isFavorite,
-      final List<Tag>? tags})
+      required final List<Note2Tag> tags})
       : _tags = tags;
 
   factory _$_Note.fromJson(Map<String, dynamic> json) => _$$_NoteFromJson(json);
@@ -173,16 +173,14 @@ class _$_Note implements _Note {
   @override
   final String body;
   @override
-  final int groupId;
+  final int? groupId;
   @override
   final bool isFavorite;
-  final List<Tag>? _tags;
+  final List<Note2Tag> _tags;
   @override
-  List<Tag>? get tags {
-    final value = _tags;
-    if (value == null) return null;
+  List<Note2Tag> get tags {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_tags);
   }
 
   @override
@@ -231,9 +229,9 @@ abstract class _Note implements Note {
       {required final int id,
       required final String name,
       required final String body,
-      required final int groupId,
+      required final int? groupId,
       required final bool isFavorite,
-      final List<Tag>? tags}) = _$_Note;
+      required final List<Note2Tag> tags}) = _$_Note;
 
   factory _Note.fromJson(Map<String, dynamic> json) = _$_Note.fromJson;
 
@@ -244,11 +242,11 @@ abstract class _Note implements Note {
   @override
   String get body => throw _privateConstructorUsedError;
   @override
-  int get groupId => throw _privateConstructorUsedError;
+  int? get groupId => throw _privateConstructorUsedError;
   @override
   bool get isFavorite => throw _privateConstructorUsedError;
   @override
-  List<Tag>? get tags => throw _privateConstructorUsedError;
+  List<Note2Tag> get tags => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_NoteCopyWith<_$_Note> get copyWith => throw _privateConstructorUsedError;
