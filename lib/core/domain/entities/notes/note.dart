@@ -1,29 +1,32 @@
-import 'package:flutter/material.dart';
-import 'package:todo_list/core/domain/entities/tags/tag.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:todo_list/core/domain/entities/tags/tag/tag.dart';
 
-class Note {
-  final int id;
-  final String name;
-  final String body;
-  final bool isFavorite;
-  final List<Tag> tags;
+part 'note.freezed.dart';
+part 'note.g.dart';
 
-  IconData get isFavoriteIcon => isFavorite ? Icons.star : Icons.star_border;
+@freezed
+class Note with _$Note {
+  factory Note(
+      {required int id,
+      required String name,
+      required String body,
+      required int groupId,
+      required bool isFavorite,
+      List<Tag>? tags}) = _Note;
 
-  Note(
-      {required this.id,
-      required this.name,
-      required this.body,
-      required this.isFavorite,
-      required this.tags});
+  factory Note.fromJson(Map<String, Object?> json) => _$NoteFromJson(json);
 
   factory Note.test([bool isFavorite = false]) => Note(
       id: 1,
       name: 'Заметка тест',
       body: 'Заметка тело',
       isFavorite: isFavorite,
-      tags: [Tag.test(), Tag.test()]);
+      groupId: 1
+      // tags: [Tag.test(), Tag.test()]
+      );
 
   factory Note.empty([bool isFavorite = false]) =>
-      Note(id: 0, name: '', body: '', isFavorite: false, tags: []);
+      Note(id: 0, name: '', body: '', isFavorite: false, groupId: 2
+          // tags: []
+          );
 }

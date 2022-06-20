@@ -38,6 +38,8 @@ abstract class $NoteFormStateCopyWith<$Res> {
       bool isSaving,
       String? errorMessage,
       bool? isSuccess});
+
+  $NoteCopyWith<$Res> get model;
 }
 
 /// @nodoc
@@ -80,6 +82,13 @@ class _$NoteFormStateCopyWithImpl<$Res>
               as bool?,
     ));
   }
+
+  @override
+  $NoteCopyWith<$Res> get model {
+    return $NoteCopyWith<$Res>(_value.model, (value) {
+      return _then(_value.copyWith(model: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -95,6 +104,9 @@ abstract class _$$_NoteFormStateCopyWith<$Res>
       bool isSaving,
       String? errorMessage,
       bool? isSuccess});
+
+  @override
+  $NoteCopyWith<$Res> get model;
 }
 
 /// @nodoc

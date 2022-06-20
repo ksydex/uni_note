@@ -1,31 +1,45 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rx_shared_preferences/rx_shared_preferences.dart';
+import 'package:todo_list/core/domain/entities/initial_data/initial_data.dart';
 import 'package:todo_list/core/domain/entities/users/user.dart';
 import 'package:todo_list/core/infrastructure/auth/authentication_exception.dart';
+import 'package:todo_list/core/infrastructure/hive_auth_box.dart';
 
 @LazySingleton()
 class AuthenticationRepository {
-  final RxSharedPreferences _prefs;
-  static const userKey = "user";
+  final Dio _dio;
 
-  AuthenticationRepository(this._prefs);
+  AuthenticationRepository(this._dio);
 
   Future<User?> getCurrentUser() async {
-    String? userData = await _prefs.getString(userKey);
-    return (userData != null) ? User.fromJson(jsonDecode(userData)) : null;
+    return Future(() => HiveAuthBox.user);
   }
 
   Future<User> signInWithEmailAndPassword(String email, String password) async {
-    if (email == 'artyom@gmail.com' && password == "123456") {
-      final user = User(id: 1, name: 'Ivan', email: email);
-      await _prefs.setString(userKey, jsonEncode(user.toJson()));
-      return user;
-    } else {
+    try {
+      print('kewk');
+      final r = await _dio.post('auth/credentials',
+          data: {"email": email, "password": password});
+
+      print(r.data.toString());
+
+      final data = InitialData.fromJson(r.data);
+      HiveAuthBox.accessToken = data.tokenAccess;
+      HiveAuthBox.refreshToken = data.tokenRefresh;
+      HiveAuthBox.user = data.user;
+
+      return data.user;
+    } catch (e) {
+      print(e.toString());
       throw AuthenticationFailure.invalidEmailAndPasswordCombination();
     }
   }
 
-  Future<void> signOut() async => await _prefs.remove(userKey);
+  Future<void> signOut() {
+    return Future(() {
+      HiveAuthBox.user = null;
+      HiveAuthBox.refreshToken = null;
+      HiveAuthBox.accessToken = null;
+    });
+  }
 }

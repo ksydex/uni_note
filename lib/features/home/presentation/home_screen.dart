@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:todo_list/core/domain/entities/groups/group.dart';
 import 'package:todo_list/core/domain/entities/notes/note.dart';
-import 'package:todo_list/core/domain/entities/tags/tag.dart';
+import 'package:todo_list/core/domain/entities/tags/tag/tag.dart';
 import 'package:todo_list/core/presentation/constants/indents.dart';
 import 'package:todo_list/core/presentation/shared/card_base.dart';
 import 'package:todo_list/core/presentation/shared/groups/group_list_view.dart';
@@ -61,23 +61,34 @@ class _NotesOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final notes = <Note>[
-      Note(id: 1, name: "Расписание пар", body: "", isFavorite: true, tags: [
-        Tag.test(),
-        Tag(id: 2, name: "Lol lmao!", colorHex: "#ffccaa"),
-        Tag(id: 2, name: "Kekw 2", colorHex: "#ddccdd")
-      ]),
+      Note(
+          id: 1,
+          name: "Расписание пар",
+          body: "",
+          isFavorite: true,
+          groupId: 1,
+          tags: [
+            Tag(id: 2, name: "Срочно", colorHex: "#fa5e1f"),
+            Tag(id: 2, name: "Важно", colorHex: "#ffccaa"),
+            Tag(id: 2, name: "Неприоритетно", colorHex: "#cce6f4")
+          ]),
       Note(
           id: 3,
           name: "Курсовые проекты",
           body: "",
+          groupId: 1,
           isFavorite: true,
-          tags: [Tag.test()]),
+          tags: [Tag(id: 2, name: "Первый семестр", colorHex: "#59cd90")]),
       Note(
           id: 2,
           name: "Тестирование диплома",
           body: "",
+          groupId: 1,
           isFavorite: false,
-          tags: [Tag.test(), Tag(id: 2, name: "Kekw", colorHex: "#ffcccc")]),
+          tags: [
+            Tag(id: 2, name: "Второй семестр", colorHex: "#d9b5e8"),
+            Tag(id: 2, name: "Неотложно", colorHex: "#f9626c")
+          ]),
     ];
 
     final groups = <Group>[

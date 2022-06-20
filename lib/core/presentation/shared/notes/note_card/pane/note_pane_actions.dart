@@ -22,7 +22,7 @@ class NoteFavoriteAction extends StatelessWidget {
             },
         backgroundColor: Colors.orange,
         foregroundColor: Colors.white,
-        icon: note.isFavoriteIcon);
+        icon: Icons.abc_outlined);
   }
 }
 

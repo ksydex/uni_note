@@ -1,47 +1,78 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class IHttpService {
   Dio get client;
 }
 
-@Injectable(as: IHttpService)
-class HttpService implements IHttpService {
-  late final Dio _dio;
-
-  @override
-  Dio get client => _dio;
-
-  HttpService() {
-    late final Dio _dio;
-
+// @Injectable(as: IHttpService)
+@module
+abstract class HttpService {
+  // late final Dio _dio;
+  @preResolve
+  Future<Dio> get dio {
     final BaseOptions baseOptions = BaseOptions(
-      baseUrl: 'https://api.tonnus.io/api/',
-      connectTimeout: 5000,
-      receiveTimeout: 25000,
+      baseUrl: dotenv.env['API_BASE_URL']! + "/api/",
+      connectTimeout: 3000,
+      receiveTimeout: 1000,
     );
 
-    _dio = Dio(baseOptions);
-
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: _onRequest,
-        onResponse: _onResponse,
-        onError: _onError,
-      ),
-    );
+    return Future(() => Dio(baseOptions)
+      ..interceptors.add(
+        InterceptorsWrapper(
+          onRequest: _onRequest,
+          onResponse: _onResponse,
+          onError: _onError,
+        ),
+      ));
   }
+
+  // @override
+  // Dio get client => _dio;
+
+  // HttpService() {
+  //   late final Dio _dio;
+  //
+  //   final BaseOptions baseOptions = BaseOptions(
+  //     baseUrl: dotenv.env['API_BASE_URL']!,
+  //     connectTimeout: 5000,
+  //     receiveTimeout: 25000,
+  //   );
+  //
+  //   _dio = Dio(baseOptions);
+  //
+  //   _dio.interceptors.add(
+  //     InterceptorsWrapper(
+  //       onRequest: _onRequest,
+  //       onResponse: _onResponse,
+  //       onError: _onError,
+  //     ),
+  //   );
+  // }
 
   void _onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final String accessToken = '';
+
+    print('REQUEST: ' +
+        options.baseUrl +
+        options.path +
+        'data: ' +
+        options.data.toString());
 
     options.headers.addAll(_getHeaders(accessToken: accessToken));
     handler.next(options);
   }
 
-  void _onResponse(Response response, ResponseInterceptorHandler handler) {}
+  void _onResponse(Response response, ResponseInterceptorHandler handler) {
+    print('- RESPONSE: ' + response.statusCode.toString());
+    handler.next(response);
+  }
 
-  void _onError(DioError error, ErrorInterceptorHandler handler) {}
+  void _onError(DioError error, ErrorInterceptorHandler handler) {
+    print('- ERROR: ' + error.toString());
+    handler.next(error);
+  }
 
   Map<String, String> _getHeaders({String? accessToken}) {
     String? authorization;

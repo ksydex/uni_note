@@ -10,9 +10,16 @@ class HomeScreenNavbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+              offset: const Offset(0, -1),
+              blurRadius: 5,
+              color: Theme.of(context).disabledColor,
+              spreadRadius: -3),
+        ],
         color: Theme.of(context).cardColor,
-        border: Border(
-            top: BorderSide(width: 1, color: Theme.of(context).disabledColor)),
+        // border: Border(
+        //     top: BorderSide(width: 1, color: Theme.of(context).disabledColor)),
       ),
       child: SafeArea(
         child: Material(

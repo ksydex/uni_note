@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/core/domain/entities/tags/tag.dart';
+import 'package:todo_list/core/domain/entities/tags/tag/tag.dart';
 import 'package:todo_list/core/presentation/shared/tags/note_card/tag_card.dart';
 import 'package:todo_list/core/presentation/shared/tags/tag_inherited.dart';
 

@@ -11,14 +11,13 @@ class User with _$User {
     required String email,
   }) = _User;
 
-  factory User.fromJson(Map<String, dynamic> json) =>
-    _$UserFromJson(json);
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   /// Нужен на случай ошибки загрузки User'ов в выпадающий список,
   /// т.к. null зарезервирован на элемент 'assign to...'
   factory User.noUser() => const User(
-    id: -1,
-    name: '',
-    email: '',
-  );
+        id: -1,
+        name: '',
+        email: '',
+      );
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/core/domain/entities/tags/tag.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:todo_list/core/domain/entities/tags/tag/tag.dart';
 import 'package:todo_list/core/presentation/constants/indents.dart';
 import 'package:todo_list/core/presentation/shared/card_base.dart';
 import 'package:todo_list/core/presentation/shared/notes/note_card/pane/note_action_pane.dart';
@@ -25,7 +26,7 @@ class TagIndicator extends StatelessWidget {
       height: showText ? null : height,
       width: showText ? null : width,
       decoration: BoxDecoration(
-          color: tag.color,
+          color: HexColor(tag.colorHex),
           borderRadius: const BorderRadius.all(Radius.circular(5))),
       child: showText
           ? Padding(

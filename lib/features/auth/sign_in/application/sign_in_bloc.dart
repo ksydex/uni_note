@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:todo_list/core/application/utils.dart';
 import 'package:todo_list/core/domain/entities/users/user.dart';
 import 'package:todo_list/core/infrastructure/auth/authentication_exception.dart';
 import 'package:todo_list/core/infrastructure/auth/authentication_repository.dart';
@@ -18,15 +17,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   static const debounceDuration = Duration(milliseconds: 100);
 
   SignInBloc(this._auth) : super(SignInState.initial()) {
-    on<EmailChanged>(
-      (event, emit) => emit(state.copyWith(email: event.email, success: null)),
-      transformer: debounceRestartable(debounceDuration),
-    );
-    on<PasswordChanged>(
-      (event, emit) =>
-          emit(state.copyWith(password: event.password, success: null)),
-      transformer: debounceRestartable(debounceDuration),
-    );
+    on<EmailChanged>((event, emit) =>
+        emit(state.copyWith(email: event.email, success: null)));
+    on<PasswordChanged>((event, emit) =>
+        emit(state.copyWith(password: event.password, success: null)));
     on<SignInBtnPressed>(
       (event, emit) async {
         emit(state.copyWith(isSubmitting: true, success: null));

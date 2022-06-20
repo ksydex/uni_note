@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_list/core/infrastructure/hive_auth_box.dart';
 import 'package:todo_list/core/presentation/constants/indents.dart';
 import 'package:todo_list/core/presentation/routes/app_router.dart';
 import 'package:todo_list/core/presentation/shared/indent.dart';
@@ -12,7 +13,7 @@ class ProfileContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final userName = "Лукьянов Артём";
+    final userName = HiveAuthBox.user?.name ?? "Нет имени!";
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

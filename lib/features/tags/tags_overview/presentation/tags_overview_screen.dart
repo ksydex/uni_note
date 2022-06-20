@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/core/domain/entities/tags/tag.dart';
+import 'package:todo_list/core/domain/entities/tags/tag/tag.dart';
 import 'package:todo_list/core/presentation/constants/indents.dart';
 import 'package:todo_list/core/presentation/shared/tags/tag_list_view.dart';
 
@@ -13,10 +13,14 @@ class TagsOverviewScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('Теги'),
-          actions: const [
+          actions: [
             // SearchButton(),
             // FilterButton(),
             // SignOutButton(),
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {},
+            )
           ],
         ),
         body: const Padding(
@@ -34,9 +38,12 @@ class _TagsOverview extends StatelessWidget {
     final theme = Theme.of(context);
 
     final tags = <Tag>[
-      Tag(id: 1, name: "Расписание пар", colorHex: "#ffaabb"),
-      Tag(id: 3, name: "Курсовые проекты", colorHex: "#ffffbb"),
-      Tag(id: 2, name: "Тестирование диплома", colorHex: "#ffaaff"),
+      Tag(id: 2, name: "Первый семестр", colorHex: "#59cd90"),
+      Tag(id: 2, name: "Второй семестр", colorHex: "#d9b5e8"),
+      Tag(id: 2, name: "Неотложно", colorHex: "#f9626c"),
+      Tag(id: 2, name: "Срочно", colorHex: "#fa5e1f"),
+      Tag(id: 2, name: "Важно", colorHex: "#ffccaa"),
+      Tag(id: 2, name: "Неприоритетно", colorHex: "#cce6f4")
     ];
 
     return ListView(

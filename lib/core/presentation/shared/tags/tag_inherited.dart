@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/core/domain/entities/tags/tag.dart';
+import 'package:todo_list/core/domain/entities/tags/tag/tag.dart';
 
 class TagInherited extends InheritedWidget {
   final Tag value;
