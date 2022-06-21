@@ -1,10 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:todo_list/core/domain/entities/groups/group.dart';
 import 'package:todo_list/core/presentation/constants/indents.dart';
 import 'package:todo_list/core/presentation/routes/app_router.dart';
+import 'package:todo_list/features/home/application/home_bloc.dart';
+import 'package:todo_list/features/home/presentation/widgets/add_group_container.dart';
 
 class HomeScreenNavbar extends StatelessWidget {
-  const HomeScreenNavbar({Key? key}) : super(key: key);
+  final Group? group;
+
+  const HomeScreenNavbar({Key? key, this.group}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +37,19 @@ class HomeScreenNavbar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showCupertinoModalBottomSheet(
+                          context: context,
+                          builder: (ctx) => Padding(
+                              padding: const EdgeInsets.all(Indents.lg),
+                              child: BlocProvider.value(
+                                value: BlocProvider.of<HomeBloc>(context),
+                                child: AddGroupContainer(
+                                  groupId: group?.id,
+                                ),
+                              )),
+                          expand: false);
+                    },
                     icon: const Icon(Icons.create_new_folder)),
                 IconButton(
                     onPressed: () =>

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:todo_list/core/domain/entities/groups/group.dart';
-import 'package:todo_list/core/domain/entities/notes/note.dart';
 import 'package:todo_list/core/presentation/constants/indents.dart';
 import 'package:todo_list/core/presentation/shared/card_base.dart';
 import 'package:todo_list/core/presentation/shared/groups/group_list_view.dart';
@@ -23,38 +22,40 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          group?.name ?? 'Документы',
-          style: theme.textTheme.titleMedium?.copyWith(
-              color: theme.colorScheme.onPrimary, fontWeight: FontWeight.w500),
-        ),
-        leading: IconButton(
-            icon: const Icon(Icons.account_circle_outlined),
-            onPressed: () {
-              showCupertinoModalBottomSheet(
-                  context: context,
-                  builder: (ctx) => const Padding(
-                      padding: EdgeInsets.all(Indents.lg),
-                      child: ProfileContainer()),
-                  expand: false);
-            }),
-        actions: const [
-          // SearchButton(),
-          // FilterButton(),
-          // SignOutButton(),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(Indents.sm),
-        child: BlocProvider(
-            create: (context) => getIt<HomeBloc>()
-              ..add(HomeEventInitialLoad(groupId: group?.id)),
-            child: _NotesOverview(canBePopped: group != null)),
-      ),
-      bottomNavigationBar: const HomeScreenNavbar(),
-    );
+    return BlocProvider(
+        create: (context) =>
+            getIt<HomeBloc>()..add(HomeEventInitialLoad(groupId: group?.id)),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              group?.name ?? 'Документы',
+              style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.onPrimary,
+                  fontWeight: FontWeight.w500),
+            ),
+            leading: IconButton(
+                icon: const Icon(Icons.account_circle_outlined),
+                onPressed: () {
+                  showCupertinoModalBottomSheet(
+                      context: context,
+                      builder: (ctx) => const Padding(
+                          padding: EdgeInsets.all(Indents.lg),
+                          child: ProfileContainer()));
+                }),
+            actions: const [
+              // SearchButton(),
+              // FilterButton(),
+              // SignOutButton(),
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(Indents.sm),
+            child: _NotesOverview(canBePopped: group != null, group: group),
+          ),
+          bottomNavigationBar: HomeScreenNavbar(
+            group: group,
+          ),
+        ));
   }
 }
 
@@ -68,36 +69,6 @@ class _NotesOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final notes = <Note>[
-      Note(
-          id: 1,
-          name: "Расписание пар",
-          body: "",
-          isFavorite: true,
-          groupId: 1,
-          tags: []),
-      Note(
-          id: 3,
-          name: "Курсовые проекты",
-          body: "",
-          groupId: 1,
-          isFavorite: true,
-          tags: []),
-      Note(
-          id: 2,
-          name: "Тестирование диплома",
-          body: "",
-          groupId: 1,
-          isFavorite: false,
-          tags: []),
-    ];
-
-    final groups = <Group>[
-      Group(id: 1, name: "Функциональное программирование", isFavorite: false),
-      Group(id: 2, name: "Компьютерная графика", isFavorite: false),
-      Group(id: 3, name: "Информатика", isFavorite: false),
-      Group(id: 4, name: "Мультимедийные технологии", isFavorite: false),
-    ];
 
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
       return state.isLoading
@@ -126,8 +97,21 @@ class _NotesOverview extends StatelessWidget {
                         ),
                     ],
                   ),
-                GroupListView(groups: groups),
-                NoteListView(notes: state.notes),
+                if (state.notes.isEmpty && state.groups.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: Indents.lg * 2),
+                    child: Center(
+                      child: Text(
+                        "Добавьте первую заметку или раздел!",
+                        style: theme.textTheme.titleMedium
+                            ?.copyWith(color: theme.disabledColor),
+                      ),
+                    ),
+                  )
+                else ...[
+                  GroupListView(groups: state.groups),
+                  NoteListView(notes: state.notes),
+                ]
               ],
             );
     });

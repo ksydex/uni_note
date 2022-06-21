@@ -5,7 +5,6 @@ import 'package:todo_list/core/presentation/shared/groups/group_card/pane/group_
 class GroupActionPane extends ActionPane {
   GroupActionPane({Key? key})
       : super(key: key, motion: const DrawerMotion(), children: [
-          const GroupFavoriteAction(),
           const GroupDeleteAction(),
         ]);
 }

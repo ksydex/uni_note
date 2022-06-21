@@ -5,3 +5,9 @@ class HomeEventInitialLoad extends HomeEvent {
 
   HomeEventInitialLoad({required this.groupId});
 }
+
+class HomeEventAddGroup extends HomeEvent {
+  final String name;
+
+  HomeEventAddGroup({required this.name});
+}

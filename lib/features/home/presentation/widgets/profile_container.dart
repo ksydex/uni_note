@@ -17,6 +17,7 @@ class ProfileContainer extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Indents.lg)
@@ -53,6 +54,9 @@ class ProfileContainer extends StatelessWidget {
             text: const Text("Настройки"),
             icon: const Icon(Icons.settings)),
         const SignOutButton(),
+        const SizedBox(
+          height: 100,
+        )
       ],
     );
   }
