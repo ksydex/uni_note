@@ -12,6 +12,7 @@ class Note with _$Note {
       required String body,
       required int? groupId,
       required bool isFavorite,
+      required bool isArchived,
       required List<Note2Tag> tags}) = _Note;
 
   factory Note.fromJson(Map<String, Object?> json) => _$NoteFromJson(json);
@@ -21,9 +22,16 @@ class Note with _$Note {
       name: 'Заметка тест',
       body: 'Заметка тело',
       isFavorite: isFavorite,
+      isArchived: false,
       groupId: 1,
       tags: []);
 
-  factory Note.empty([bool isFavorite = false]) =>
-      Note(id: 0, name: '', body: '', isFavorite: false, groupId: 2, tags: []);
+  factory Note.empty([bool isFavorite = false]) => Note(
+      id: 0,
+      name: '',
+      body: '',
+      isArchived: false,
+      isFavorite: false,
+      groupId: 2,
+      tags: []);
 }

@@ -25,6 +25,7 @@ mixin _$Note {
   String get body => throw _privateConstructorUsedError;
   int? get groupId => throw _privateConstructorUsedError;
   bool get isFavorite => throw _privateConstructorUsedError;
+  bool get isArchived => throw _privateConstructorUsedError;
   List<Note2Tag> get tags => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,6 +43,7 @@ abstract class $NoteCopyWith<$Res> {
       String body,
       int? groupId,
       bool isFavorite,
+      bool isArchived,
       List<Note2Tag> tags});
 }
 
@@ -60,6 +62,7 @@ class _$NoteCopyWithImpl<$Res> implements $NoteCopyWith<$Res> {
     Object? body = freezed,
     Object? groupId = freezed,
     Object? isFavorite = freezed,
+    Object? isArchived = freezed,
     Object? tags = freezed,
   }) {
     return _then(_value.copyWith(
@@ -83,6 +86,10 @@ class _$NoteCopyWithImpl<$Res> implements $NoteCopyWith<$Res> {
           ? _value.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
               as bool,
+      isArchived: isArchived == freezed
+          ? _value.isArchived
+          : isArchived // ignore: cast_nullable_to_non_nullable
+              as bool,
       tags: tags == freezed
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -102,6 +109,7 @@ abstract class _$$_NoteCopyWith<$Res> implements $NoteCopyWith<$Res> {
       String body,
       int? groupId,
       bool isFavorite,
+      bool isArchived,
       List<Note2Tag> tags});
 }
 
@@ -121,6 +129,7 @@ class __$$_NoteCopyWithImpl<$Res> extends _$NoteCopyWithImpl<$Res>
     Object? body = freezed,
     Object? groupId = freezed,
     Object? isFavorite = freezed,
+    Object? isArchived = freezed,
     Object? tags = freezed,
   }) {
     return _then(_$_Note(
@@ -144,6 +153,10 @@ class __$$_NoteCopyWithImpl<$Res> extends _$NoteCopyWithImpl<$Res>
           ? _value.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
               as bool,
+      isArchived: isArchived == freezed
+          ? _value.isArchived
+          : isArchived // ignore: cast_nullable_to_non_nullable
+              as bool,
       tags: tags == freezed
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -161,6 +174,7 @@ class _$_Note implements _Note {
       required this.body,
       required this.groupId,
       required this.isFavorite,
+      required this.isArchived,
       required final List<Note2Tag> tags})
       : _tags = tags;
 
@@ -176,6 +190,8 @@ class _$_Note implements _Note {
   final int? groupId;
   @override
   final bool isFavorite;
+  @override
+  final bool isArchived;
   final List<Note2Tag> _tags;
   @override
   List<Note2Tag> get tags {
@@ -185,7 +201,7 @@ class _$_Note implements _Note {
 
   @override
   String toString() {
-    return 'Note(id: $id, name: $name, body: $body, groupId: $groupId, isFavorite: $isFavorite, tags: $tags)';
+    return 'Note(id: $id, name: $name, body: $body, groupId: $groupId, isFavorite: $isFavorite, isArchived: $isArchived, tags: $tags)';
   }
 
   @override
@@ -199,6 +215,8 @@ class _$_Note implements _Note {
             const DeepCollectionEquality().equals(other.groupId, groupId) &&
             const DeepCollectionEquality()
                 .equals(other.isFavorite, isFavorite) &&
+            const DeepCollectionEquality()
+                .equals(other.isArchived, isArchived) &&
             const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
@@ -211,6 +229,7 @@ class _$_Note implements _Note {
       const DeepCollectionEquality().hash(body),
       const DeepCollectionEquality().hash(groupId),
       const DeepCollectionEquality().hash(isFavorite),
+      const DeepCollectionEquality().hash(isArchived),
       const DeepCollectionEquality().hash(_tags));
 
   @JsonKey(ignore: true)
@@ -231,6 +250,7 @@ abstract class _Note implements Note {
       required final String body,
       required final int? groupId,
       required final bool isFavorite,
+      required final bool isArchived,
       required final List<Note2Tag> tags}) = _$_Note;
 
   factory _Note.fromJson(Map<String, dynamic> json) = _$_Note.fromJson;
@@ -245,6 +265,8 @@ abstract class _Note implements Note {
   int? get groupId => throw _privateConstructorUsedError;
   @override
   bool get isFavorite => throw _privateConstructorUsedError;
+  @override
+  bool get isArchived => throw _privateConstructorUsedError;
   @override
   List<Note2Tag> get tags => throw _privateConstructorUsedError;
   @override

@@ -1,20 +1,10 @@
 part of 'note_form_cubit.dart';
 
-@freezed
-class NoteFormState with _$NoteFormState {
-  const factory NoteFormState({
-    required Note model,
-    required bool isEditing,
-    required bool isSaving,
-    required String? errorMessage,
-    required bool? isSuccess,
-  }) = _NoteFormState;
+class NoteFormState {
+  final bool isLoading;
+  final Note? note;
 
-  factory NoteFormState.initial() => NoteFormState(
-        model: Note.empty(),
-        isEditing: false,
-        isSaving: false,
-        errorMessage: null,
-        isSuccess: null,
-      );
+  NoteFormState({required this.isLoading, this.note});
+
+  factory NoteFormState.initial() => NoteFormState(isLoading: true, note: null);
 }

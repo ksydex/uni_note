@@ -20,8 +20,12 @@ class GroupRepository {
     return List<Group>.from(r.data.map((x) => Group.fromJson(x)));
   }
 
-  Future<Group> create(Group group) async {
+  Future<Group> add(Group group) async {
     final r = await _dio.post('group', data: group);
     return Group.fromJson(r.data);
+  }
+
+  Future remove(int id) async {
+    await _dio.delete('group/' + id.toString());
   }
 }

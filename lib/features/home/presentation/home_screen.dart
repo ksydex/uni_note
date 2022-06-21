@@ -15,55 +15,86 @@ import 'package:todo_list/injection.dart';
 
 class HomeScreen extends StatelessWidget {
   final Group? group;
+  final String? customTitle;
+  final bool showProfileIcon;
+  final bool showGroups;
+  final bool noteIsArchived;
+  final bool? noteIsFavorite;
 
-  const HomeScreen({Key? key, this.group}) : super(key: key);
+  const HomeScreen(
+      {Key? key,
+      this.group,
+      this.customTitle,
+      this.showProfileIcon = true,
+      this.showGroups = true,
+      this.noteIsArchived = false,
+      this.noteIsFavorite})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return BlocProvider(
-        create: (context) =>
-            getIt<HomeBloc>()..add(HomeEventInitialLoad(groupId: group?.id)),
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              group?.name ?? 'Документы',
-              style: theme.textTheme.titleMedium?.copyWith(
-                  color: theme.colorScheme.onPrimary,
-                  fontWeight: FontWeight.w500),
+        create: (context) => getIt<HomeBloc>()
+          ..add(HomeEventInitialLoad(
+              groupId: group?.id,
+              noteIsArchived: noteIsArchived,
+              noteIsFavorite: noteIsFavorite)),
+        child: BlocBuilder<HomeBloc, HomeState>(builder: (context, _) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                customTitle ?? group?.name ?? 'Документы',
+                style: theme.textTheme.titleMedium?.copyWith(
+                    color: theme.colorScheme.onPrimary,
+                    fontWeight: FontWeight.w500),
+              ),
+              leading: !showProfileIcon
+                  ? null
+                  : IconButton(
+                      icon: const Icon(Icons.account_circle_outlined),
+                      onPressed: () {
+                        showCupertinoModalBottomSheet(
+                            context: context,
+                            builder: (ctx) => Padding(
+                                padding: const EdgeInsets.all(Indents.lg),
+                                child: BlocProvider.value(
+                                    value: BlocProvider.of<HomeBloc>(context),
+                                    child: const ProfileContainer())));
+                      }),
+              actions: const [
+                // SearchButton(),
+                // FilterButton(),
+                // SignOutButton(),
+              ],
             ),
-            leading: IconButton(
-                icon: const Icon(Icons.account_circle_outlined),
-                onPressed: () {
-                  showCupertinoModalBottomSheet(
-                      context: context,
-                      builder: (ctx) => const Padding(
-                          padding: EdgeInsets.all(Indents.lg),
-                          child: ProfileContainer()));
-                }),
-            actions: const [
-              // SearchButton(),
-              // FilterButton(),
-              // SignOutButton(),
-            ],
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(Indents.sm),
-            child: _NotesOverview(canBePopped: group != null, group: group),
-          ),
-          bottomNavigationBar: HomeScreenNavbar(
-            group: group,
-          ),
-        ));
+            body: Padding(
+              padding: const EdgeInsets.all(Indents.sm),
+              child: _NotesOverview(
+                canBePopped: group != null,
+                group: group,
+                showGroups: showGroups,
+              ),
+            ),
+            bottomNavigationBar: HomeScreenNavbar(
+              group: group,
+            ),
+          );
+        }));
   }
 }
 
 class _NotesOverview extends StatelessWidget {
   final bool canBePopped;
   final Group? group;
+  final bool showGroups;
 
-  const _NotesOverview({Key? key, this.canBePopped = false, this.group})
+  const _NotesOverview(
+      {Key? key,
+      this.canBePopped = false,
+      this.group,
+      required this.showGroups})
       : super(key: key);
 
   @override
@@ -109,7 +140,7 @@ class _NotesOverview extends StatelessWidget {
                     ),
                   )
                 else ...[
-                  GroupListView(groups: state.groups),
+                  if (showGroups) GroupListView(groups: state.groups),
                   NoteListView(notes: state.notes),
                 ]
               ],

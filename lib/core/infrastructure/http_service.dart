@@ -56,8 +56,6 @@ abstract class HttpService {
     final String? accessToken =
         HiveAuthBox.isAuthorized ? 'Bearer ' + HiveAuthBox.accessToken! : null;
 
-    print('token## ' + accessToken.toString());
-
     print('REQUEST: ' +
         options.baseUrl +
         options.path +

@@ -20,25 +20,67 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   static const debounceDuration = Duration(milliseconds: 100);
 
   HomeBloc(this._noteRepository, this._groupRepository)
-      : super(HomeState.initial()) {
-    on<HomeEventInitialLoad>((e, emit) => _onInitialLoad(e.groupId, emit));
-
+      : super(HomeState.initial(noteIsArchived: false)) {
+    on<HomeEventInitialLoad>((e, emit) =>
+        _onInitialLoad(e.groupId, emit, e.noteIsArchived, e.noteIsFavorite));
+    on<HomeEventRemoveGroup>((e, emit) => _onRemoveGroup(e.id, emit));
+    on<HomeEventArchiveNote>((e, emit) => _onArchiveNote(e.id, emit));
+    on<HomeEventFavoriteNote>((e, emit) => _onFavoriteNote(e.id, emit));
     on<HomeEventAddGroup>((e, emit) async {
       await _groupRepository
-          .create(Group(id: 0, groupId: state.groupId, name: e.name));
+          .add(Group(id: 0, groupId: state.groupId, name: e.name));
       await _reloadData(state.groupId, emit);
     });
   }
+  Future<void> _onRemoveGroup(int id, Emitter<HomeState> emit) async {
+    await _groupRepository.remove(id);
+    await _reloadData(state.groupId, emit);
+  }
 
-  FutureOr<void> _onInitialLoad(int? groupId, Emitter<HomeState> emit) async {
-    emit(HomeState.initial());
+  Future<void> _onArchiveNote(int id, Emitter<HomeState> emit) async {
+    var note = state.notes.firstWhere((element) => element.id == id);
+    await _noteRepository.update(Note(
+        id: note.id,
+        isFavorite: note.isFavorite,
+        name: note.name,
+        body: note.body,
+        groupId: note.groupId,
+        isArchived: !note.isArchived,
+        tags: note.tags));
+    await _reloadData(state.groupId, emit);
+  }
+
+  Future<void> _onFavoriteNote(int id, Emitter<HomeState> emit) async {
+    var note = state.notes.firstWhere((element) => element.id == id);
+    await _noteRepository.update(Note(
+        id: note.id,
+        isFavorite: !note.isFavorite,
+        name: note.name,
+        body: note.body,
+        groupId: note.groupId,
+        isArchived: note.isArchived,
+        tags: note.tags));
+    await _reloadData(state.groupId, emit);
+  }
+
+  FutureOr<void> _onInitialLoad(int? groupId, Emitter<HomeState> emit,
+      bool? noteIsArchived, bool? noteIsFavorite) async {
+    emit(HomeState.initial(
+        noteIsArchived: noteIsArchived ?? state.noteIsArchived,
+        noteIsFavorite: noteIsFavorite));
     await _reloadData(groupId, emit);
   }
 
   Future<void> _reloadData(int? groupId, Emitter<HomeState> emit) async {
-    final notes = await _noteRepository.getAll(groupId, true);
+    final notes = await _noteRepository.getAll(
+        groupId, true, state.noteIsArchived, state.noteIsFavorite);
     final groups = await _groupRepository.getAll(groupId, true);
     emit(HomeState(
-        groupId: groupId, groups: groups, notes: notes, isLoading: false));
+        noteIsArchived: state.noteIsArchived,
+        noteIsFavorite: state.noteIsFavorite,
+        groupId: groupId,
+        groups: groups,
+        notes: notes,
+        isLoading: false));
   }
 }

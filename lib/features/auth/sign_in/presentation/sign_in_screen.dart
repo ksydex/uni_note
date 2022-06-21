@@ -5,6 +5,7 @@ import 'package:todo_list/core/application/auth/auth_bloc.dart';
 import 'package:todo_list/core/presentation/constants/indents.dart';
 import 'package:todo_list/core/presentation/routes/app_router.dart';
 import 'package:todo_list/core/presentation/shared/error_snack_bar.dart';
+import 'package:todo_list/core/presentation/shared/indent.dart';
 import 'package:todo_list/features/auth/sign_in/application/sign_in_bloc.dart';
 import 'package:todo_list/injection.dart';
 
@@ -66,7 +67,7 @@ class _SignInForm extends StatelessWidget {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.email), hintText: 'Email'),
+                      prefixIcon: Icon(Icons.alternate_email), hintText: 'Email'),
                   autofocus: true,
                   validator: (value) => (value == null || value.isEmpty)
                       ? 'Пожалуйста, введите Email'
@@ -93,20 +94,29 @@ class _SignInForm extends StatelessWidget {
                   height: Indents.lg,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    TextButton(
-                        onPressed: () {}, child: const Text('Сбросить пароль')),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_signInFormKey.currentState!.validate()) {
-                          _signInFormKey.currentState?.save();
-                          context
-                              .read<SignInBloc>()
-                              .add(const SignInEvent.signInBtnPressed());
-                        }
-                      },
-                      child: const Text('Войти'),
+                    // TextButton(
+                    //     onPressed: () {}, child: const Text('Сбросить пароль')),
+                    Row(
+                      children: [
+                        TextButton(
+                            onPressed: () => AutoRouter.of(context)
+                                .push(const SignUpRoute()),
+                            child: const Text('Зарегистрироваться')),
+                        const Indent.lg(),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_signInFormKey.currentState!.validate()) {
+                              _signInFormKey.currentState?.save();
+                              context
+                                  .read<SignInBloc>()
+                                  .add(const SignInEvent.signInBtnPressed());
+                            }
+                          },
+                          child: const Text('Войти'),
+                        ),
+                      ],
                     ),
                   ],
                 ),

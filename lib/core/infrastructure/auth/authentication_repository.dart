@@ -15,13 +15,20 @@ class AuthenticationRepository {
     return Future(() => HiveAuthBox.user);
   }
 
+  Future<bool> signUp(String name, String email, String password) async {
+    try {
+      await _dio.post('auth/sign-up',
+          data: {"name": name, "email": email, "password": password});
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   Future<User> signInWithEmailAndPassword(String email, String password) async {
     try {
-      print('kewk');
       final r = await _dio.post('auth/credentials',
           data: {"email": email, "password": password});
-
-      print(r.data.toString());
 
       final data = InitialData.fromJson(r.data);
       HiveAuthBox.accessToken = data.tokenAccess;
